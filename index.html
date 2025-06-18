@@ -18,8 +18,9 @@
   #version {
     text-align: center;
     font-style: italic;
-    color: #666;
-    margin-bottom: 25px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    color: #555;
   }
   table {
     width: 100%;
@@ -70,6 +71,32 @@
     max-width: 40px;
     max-height: 40px;
   }
+  footer {
+    margin-top: 40px;
+    font-size: 0.8em;
+    color: #777;
+    text-align: center;
+  }
+  footer a {
+    color: #777;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+  #report {
+    margin-top: 10px;
+    font-size: 0.75em;
+    color: #555;
+    text-align: center;
+  }
+  #report a {
+    color: #555;
+    text-decoration: none;
+  }
+  #report a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -93,8 +120,17 @@
   </div>
 </div>
 
+<footer>
+  the site is constantly updated! &nbsp;|&nbsp; created by Domicus &nbsp;|&nbsp;
+  <a href="https://www.instagram.com/domenico_manno8" target="_blank" rel="noopener noreferrer">@domenico_manno8</a>
+</footer>
+
+<div id="report">
+  To report errors: <a href="mailto:doma.lavoro@gmail.com">doma.lavoro@gmail.com</a>
+</div>
+
 <script>
-  // Items and recipes data (names in English now)
+  // Data of items and recipes
   const items = [
     {
       name: "Wooden Shovel",
@@ -186,6 +222,7 @@
   const recipeName = document.getElementById("recipeName");
   const craftingGrid = document.getElementById("craftingGrid");
 
+  // Generate items table
   function renderItems() {
     items.forEach((item, idx) => {
       const tr = document.createElement("tr");
@@ -198,11 +235,13 @@
     });
   }
 
+  // Show recipe on click
   function showRecipe(idx) {
     const item = items[idx];
     recipeName.textContent = item.name;
-    craftingGrid.innerHTML = "";
+    craftingGrid.innerHTML = ""; // reset
 
+    // Create 3x3 grid cells with ingredients or empty
     for (let r=0; r<3; r++) {
       for (let c=0; c<3; c++) {
         const cell = document.createElement("div");
