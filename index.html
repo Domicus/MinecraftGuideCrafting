@@ -1,98 +1,232 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MinecraftGuideCrafting</title>
-  <style>
-    body {
-      background-color: #1e1e1e;
-      color: #f0f0f0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #2f4f2f;
-      padding: 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      color: #aaffaa;
-    }
-    nav {
-      background-color: #3e3e3e;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-    nav a {
-      color: #aaffaa;
-      text-decoration: none;
-    }
-    main {
-      padding: 2rem;
-    }
-    .craft {
-      background-color: #2a2a2a;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      border-radius: 10px;
-    }
-    .craft h2 {
-      color: #ffaa00;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #2f4f2f;
-      margin-top: 2rem;
-      color: #aaa;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minecraft Crafting Guide</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+    background: #f0f0f0;
+  }
+  h1 {
+    text-align: center;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  th {
+    background: #444;
+    color: white;
+  }
+  tr:hover {
+    background: #eef;
+    cursor: pointer;
+  }
+  img.item-img {
+    width: 40px;
+    height: 40px;
+  }
+  #recipe {
+    margin-top: 25px;
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+  }
+  .crafting-table {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+    gap: 4px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .crafting-cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #666;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .crafting-cell img {
+    max-width: 40px;
+    max-height: 40px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>MinecraftGuideCrafting</h1>
-  </header>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#crafting">Guida Crafting</a>
-    <a href="#contatti">Contatti</a>
-  </nav>
-  <main>
-    <section id="intro">
-      <h2>Benvenuto!</h2>
-      <p>Questa è la tua guida facile e veloce ai crafting di Minecraft. Impara in pochi secondi come costruire qualsiasi oggetto!</p>
-    </section>
-    <section id="crafting">
-      <h2>Crafting Base</h2>
-      <div class="craft">
-        <h2>🔨 Piccone di Legno</h2>
-        <p>3 assi di legno in alto, 2 bastoni al centro e in basso.</p>
-      </div>
-      <div class="craft">
-        <h2>🪓 Ascia di Legno</h2>
-        <p>3 assi disposti a L rovesciata, 2 bastoni al centro e in basso.</p>
-      </div>
-      <div class="craft">
-        <h2>🔥 Fornace</h2>
-        <p>8 blocchi di pietra, lasciando vuoto il centro della griglia.</p>
-      </div>
-      <div class="craft">
-        <h2>🛏 Letto</h2>
-        <p>3 blocchi di lana sopra, 3 assi di legno sotto.</p>
-      </div>
-      <div class="craft">
-        <h2>📦 Banco da lavoro</h2>
-        <p>4 assi di legno, una per angolo (2x2).</p>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <p>Created by Domicus</p>
-  </footer>
+
+<h1>Guida Crafting Minecraft</h1>
+
+<table id="itemsTable">
+  <thead>
+    <tr><th>Immagine</th><th>Nome Oggetto</th></tr>
+  </thead>
+  <tbody>
+    <!-- righe generate da JS -->
+  </tbody>
+</table>
+
+<div id="recipe" style="display:none;">
+  <h2>Ricetta per: <span id="recipeName"></span></h2>
+  <div class="crafting-table" id="craftingGrid">
+    <!-- celle generate da JS -->
+  </div>
+</div>
+
+<script>
+  // Dati degli oggetti e ricette
+  const items = [
+    {
+      name: "Pala di legno",
+      image: "https://minecraftitemids.com/item/wooden_shovel.png",
+      recipe: [
+        [null, "wood_plank", null],
+        [null, "stick", null],
+        [null, "stick", null]
+      ],
+    },
+    {
+      name: "Ascia di pietra",
+      image: "https://minecraftitemids.com/item/stone_axe.png",
+      recipe: [
+        ["stone", "stone", null],
+        ["stone", "stick", null],
+        [null, "stick", null]
+      ],
+    },
+    {
+      name: "Forno",
+      image: "https://minecraftitemids.com/item/furnace.png",
+      recipe: [
+        ["cobblestone", "cobblestone", "cobblestone"],
+        ["cobblestone", null, "cobblestone"],
+        ["cobblestone", "cobblestone", "cobblestone"]
+      ],
+    },
+    {
+      name: "Tavolo da lavoro",
+      image: "https://minecraftitemids.com/item/crafting_table.png",
+      recipe: [
+        ["wood_plank", "wood_plank", null],
+        ["wood_plank", "wood_plank", null],
+        [null, null, null]
+      ],
+    },
+    {
+      name: "Spada di ferro",
+      image: "https://minecraftitemids.com/item/iron_sword.png",
+      recipe: [
+        [null, "iron_ingot", null],
+        [null, "iron_ingot", null],
+        [null, "stick", null]
+      ],
+    },
+    {
+      name: "Pietra focaia e acciaio",
+      image: "https://minecraftitemids.com/item/flint_and_steel.png",
+      recipe: [
+        [null, null, null],
+        [null, "iron_ingot", "flint"],
+        [null, null, null]
+      ],
+    },
+    {
+      name: "Letto",
+      image: "https://minecraftitemids.com/item/bed.png",
+      recipe: [
+        ["wool", "wool", "wool"],
+        ["wood_plank", "wood_plank", "wood_plank"],
+        [null, null, null]
+      ],
+    },
+    {
+      name: "Secchio",
+      image: "https://minecraftitemids.com/item/bucket.png",
+      recipe: [
+        ["iron_ingot", null, "iron_ingot"],
+        [null, "iron_ingot", null],
+        [null, null, null]
+      ],
+    }
+  ];
+
+  // Icone delle materie prime usate
+  const icons = {
+    "wood_plank": "https://minecraftitemids.com/item/wood_plank.png",
+    "stick": "https://minecraftitemids.com/item/stick.png",
+    "stone": "https://minecraftitemids.com/item/stone.png",
+    "cobblestone": "https://minecraftitemids.com/item/cobblestone.png",
+    "iron_ingot": "https://minecraftitemids.com/item/iron_ingot.png",
+    "flint": "https://minecraftitemids.com/item/flint.png",
+    "wool": "https://minecraftitemids.com/item/wool.png",
+  };
+
+  const itemsTableBody = document.querySelector("#itemsTable tbody");
+  const recipeDiv = document.getElementById("recipe");
+  const recipeName = document.getElementById("recipeName");
+  const craftingGrid = document.getElementById("craftingGrid");
+
+  // Genera la tabella degli oggetti
+  function renderItems() {
+    items.forEach((item, idx) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><img class="item-img" src="${item.image}" alt="${item.name}"></td>
+        <td>${item.name}</td>
+      `;
+      tr.addEventListener("click", () => showRecipe(idx));
+      itemsTableBody.appendChild(tr);
+    });
+  }
+
+  // Mostra la ricetta cliccata
+  function showRecipe(idx) {
+    const item = items[idx];
+    recipeName.textContent = item.name;
+    craftingGrid.innerHTML = ""; // reset
+
+    // Creo 3x3 celle, con ingredienti o vuote
+    for (let r=0; r<3; r++) {
+      for (let c=0; c<3; c++) {
+        const cell = document.createElement("div");
+        cell.classList.add("crafting-cell");
+
+        let ingredient = null;
+        if(item.recipe[r] && item.recipe[r][c]) {
+          ingredient = item.recipe[r][c];
+        }
+
+        if(ingredient) {
+          const imgSrc = icons[ingredient] || "https://via.placeholder.com/40?text=?";
+          const img = document.createElement("img");
+          img.src = imgSrc;
+          img.alt = ingredient;
+          cell.appendChild(img);
+        }
+
+        craftingGrid.appendChild(cell);
+      }
+    }
+
+    recipeDiv.style.display = "block";
+    recipeDiv.scrollIntoView({behavior:"smooth"});
+  }
+
+  renderItems();
+</script>
+
 </body>
 </html>
