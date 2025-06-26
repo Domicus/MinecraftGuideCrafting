@@ -23,131 +23,68 @@
     margin-bottom: 25px;
   }
   .category-btn {
-    background: #4a90e2;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 6px;
-    font-size: 1em;
+    background: #4a90e2; color: white; border: none;
+    padding: 12px 20px; cursor: pointer; font-weight: bold;
+    border-radius: 6px; font-size: 1em;
     transition: background-color 0.3s;
   }
-  .category-btn:hover {
-    background: #357abd;
-  }
+  .category-btn:hover { background: #357abd; }
   #itemsList {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 15px;
+    background: white; border: 1px solid #ccc; padding: 15px;
   }
   #itemsList table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 100%; border-collapse: collapse;
   }
   #itemsList th, #itemsList td {
-    padding: 8px;
-    border: 1px solid #ccc;
-    text-align: center;
+    padding: 8px; border: 1px solid #ccc; text-align: center;
   }
   #itemsList th {
-    background: #444;
-    color: white;
+    background: #444; color: white;
   }
-  tr:hover {
-    background: #eef;
-    cursor: pointer;
-  }
-  img.item-img {
-    width: 40px;
-    height: 40px;
-  }
+  tr:hover { background: #eef; cursor: pointer; }
+  img.item-img { width: 40px; height: 40px; }
   #recipe {
-    margin-top: 25px;
-    background: white;
-    padding: 15px;
+    margin-top: 25px; background: white; padding: 15px;
     border: 1px solid #ccc;
   }
   .crafting-table {
     display: grid;
     grid-template-columns: repeat(3, 50px);
     grid-template-rows: repeat(3, 50px);
-    gap: 4px;
-    justify-content: center;
-    margin-top: 10px;
+    gap: 4px; justify-content: center; margin-top: 10px;
   }
   .crafting-cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #666;
-    background: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative; /* per tooltip */
+    width: 50px; height: 50px; border: 1px solid #666;
+    background: #ddd; display: flex;
+    justify-content: center; align-items: center;
+    position: relative;
   }
   .crafting-cell img {
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 40px; max-height: 40px;
   }
-  #backToCategories {
-    margin-top: 15px;
-    text-align: center;
+  #backToCategories, #backToItems {
+    margin-top: 15px; text-align: center;
   }
-  #backToCategories button {
-    background: #888;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+  #backToCategories button,
+  #backToItems button {
+    background: #888; color: white; border: none;
+    padding: 8px 15px; border-radius: 5px; cursor: pointer;
   }
-  #backToCategories button:hover {
-    background: #555;
-  }
-  /* tooltip semplice */
+  #backToCategories button:hover,
+  #backToItems button:hover { background: #555; }
   .tooltip {
-    position: absolute;
-    bottom: 105%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #444;
-    color: white;
-    padding: 3px 6px;
-    border-radius: 3px;
-    font-size: 0.8em;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
+    position: absolute; bottom: 105%; left: 50%;
+    transform: translateX(-50%); background: #444;
+    color: white; padding: 3px 6px; border-radius: 3px;
+    font-size: 0.8em; white-space: nowrap;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.2s;
   }
-  .crafting-cell:hover .tooltip {
-    opacity: 1;
-  }
-  /* barra ricerca */
+  .crafting-cell:hover .tooltip { opacity: 1; }
   #searchBar {
-    width: 100%;
-    margin-bottom: 12px;
-    padding: 8px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  /* bottone indietro in ricetta */
-  #backToItems {
-    margin-top: 15px;
-    text-align: center;
-  }
-  #backToItems button {
-    background: #888;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  #backToItems button:hover {
-    background: #555;
+    width: 100%; margin-bottom: 12px;
+    padding: 8px; font-size: 1em;
+    border: 1px solid #ccc; border-radius: 5px;
   }
 </style>
 </head>
@@ -192,202 +129,283 @@
 </div>
 
 <script>
-  // Lista oggetti con categoria assegnata
   const items = [
-    { name: "Wooden Shovel", image: "https://minecraftitemids.com/item/wooden_shovel.png", category: "tools",
-      recipe: [
-        [null, "wood_plank", null],
-        [null, "stick", null],
-        [null, "stick", null]
-      ],
-    },
-    { name: "Stone Axe", image: "https://minecraftitemids.com/item/stone_axe.png", category: "tools",
-      recipe: [
-        ["stone", "stone", null],
-        ["stone", "stick", null],
-        [null, "stick", null]
-      ],
-    },
-    { name: "Furnace", image: "https://minecraftitemids.com/item/furnace.png", category: "functional",
-      recipe: [
-        ["cobblestone", "cobblestone", "cobblestone"],
-        ["cobblestone", null, "cobblestone"],
-        ["cobblestone", "cobblestone", "cobblestone"]
-      ],
-    },
-    { name: "Crafting Table", image: "https://minecraftitemids.com/item/crafting_table.png", category: "functional",
-      recipe: [
-        ["wood_plank", "wood_plank", null],
-        ["wood_plank", "wood_plank", null],
-        [null, null, null]
-      ],
-    },
-    { name: "Iron Sword", image: "https://minecraftitemids.com/item/iron_sword.png", category: "combat",
-      recipe: [
-        [null, "iron_ingot", null],
-        [null, "iron_ingot", null],
-        [null, "stick", null]
-      ],
-    },
-    { name: "Flint and Steel", image: "https://minecraftitemids.com/item/flint_and_steel.png", category: "tools",
-      recipe: [
-        [null, null, null],
-        [null, "iron_ingot", "flint"],
-        [null, null, null]
-      ],
-    },
-    { name: "Bed", image: "https://i.imgur.com/1DtZa5X.png", category: "building",
-      recipe: [
-        ["wool", "wool", "wool"],
-        ["wood_plank", "wood_plank", "wood_plank"],
-        [null, null, null]
-      ],
-    },
-    { name: "Bucket", image: "https://minecraftitemids.com/item/bucket.png", category: "tools",
-      recipe: [
-        ["iron_ingot", null, "iron_ingot"],
-        [null, "iron_ingot", null],
-        [null, null, null]
-      ],
-    }
+    // -- BLOCCI DA COSTRUZIONE --
+    // Quercia
+    { name:"Tronco di quercia",              image:"https://minecraftitemids.com/item/oak_log.png",           category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di quercia",               image:"https://minecraftitemids.com/item/oak_wood.png",          category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco di quercia scortecciato", image:"https://minecraftitemids.com/item/stripped_oak_log.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di quercia scortecciato",  image:"https://minecraftitemids.com/item/stripped_oak_wood.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Assi di quercia",                image:"https://minecraftitemids.com/item/oak_planks.png",        category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini di quercia",             image:"https://minecraftitemids.com/item/oak_stairs.png",        category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra di quercia",              image:"https://minecraftitemids.com/item/oak_slab.png",          category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di quercia",         image:"https://minecraftitemids.com/item/oak_fence.png",         category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di quercia",         image:"https://minecraftitemids.com/item/oak_fence_gate.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Porta di quercia",               image:"https://minecraftitemids.com/item/oak_door.png",          category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di quercia",              image:"https://minecraftitemids.com/item/oak_trapdoor.png",      category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pedana a pressione di quercia",  image:"https://minecraftitemids.com/item/oak_pressure_plate.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pulsante di quercia",            image:"https://minecraftitemids.com/item/oak_button.png",        category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Abete (spruce)
+    { name:"Tronco di abete",                image:"https://minecraftitemids.com/item/spruce_log.png",        category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di abete",                 image:"https://minecraftitemids.com/item/spruce_wood.png",       category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco di abete scortecciato",   image:"https://minecraftitemids.com/item/stripped_spruce_log.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di abete scortecciato",    image:"https://minecraftitemids.com/item/stripped_spruce_wood.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Assi di abete",                  image:"https://minecraftitemids.com/item/spruce_planks.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini di abete",               image:"https://minecraftitemids.com/item/spruce_stairs.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra di abete",                image:"https://minecraftitemids.com/item/spruce_slab.png",       category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di abete",           image:"https://minecraftitemids.com/item/spruce_fence.png",      category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di abete",           image:"https://minecraftitemids.com/item/spruce_fence_gate.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Porta di abete",                 image:"https://minecraftitemids.com/item/spruce_door.png",       category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di abete",                image:"https://minecraftitemids.com/item/spruce_trapdoor.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pedana a pressione di abete",    image:"https://minecraftitemids.com/item/spruce_pressure_plate.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pulsante di abete",              image:"https://minecraftitemids.com/item/spruce_button.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Betulla (birch)
+    { name:"Tronco di betulla",              image:"https://minecraftitemids.com/item/birch_log.png",        category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di betulla",               image:"https://minecraftitemids.com/item/birch_wood.png",       category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco di betulla scortecciato", image:"https://minecraftitemids.com/item/stripped_birch_log.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di betulla scortecciato",  image:"https://minecraftitemids.com/item/stripped_birch_wood.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Assi di betulla",                image:"https://minecraftitemids.com/item/birch_planks.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini di betulla",             image:"https://minecraftitemids.com/item/birch_stairs.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra di betulla",              image:"https://minecraftitemids.com/item/birch_slab.png",       category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di betulla",         image:"https://minecraftitemids.com/item/birch_fence.png",      category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di betulla",         image:"https://minecraftitemids.com/item/birch_fence_gate.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Porta di betulla",               image:"https://minecraftitemids.com/item/birch_door.png",       category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di betulla",              image:"https://minecraftitemids.com/item/birch_trapdoor.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pedana a pressione di betulla",  image:"https://minecraftitemids.com/item/birch_pressure_plate.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pulsante di betulla",            image:"https://minecraftitemids.com/item/birch_button.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Giungla (jungle)
+    { name:"Tronco della giungla",           image:"https://minecraftitemids.com/item/jungle_log.png",      category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno della giungla",            image:"https://minecraftitemids.com/item/jungle_wood.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco giungla scortecciato",    image:"https://minecraftitemids.com/item/stripped_jungle_log.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno giungla scortecciato",     image:"https://minecraftitemids.com/item/stripped_jungle_wood.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Assi della giungla",             image:"https://minecraftitemids.com/item/jungle_planks.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini della giungla",          image:"https://minecraftitemids.com/item/jungle_stairs.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra della giungla",           image:"https://minecraftitemids.com/item/jungle_slab.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata della giungla",      image:"https://minecraftitemids.com/item/jungle_fence.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di giungla",         image:"https://minecraftitemids.com/item/jungle_fence_gate.png",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Porta di giungla",               image:"https://minecraftitemids.com/item/jungle_door.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di giungla",              image:"https://minecraftitemids.com/item/jungle_trapdoor.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pedana pressione giungla",       image:"https://minecraftitemids.com/item/jungle_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante di giungla",            image:"https://minecraftitemids.com/item/jungle_button.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Acacia
+    { name:"Tronco di acacia",               image:"https://minecraftitemids.com/item/acacia_log.png",      category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di acacia",                image:"https://minecraftitemids.com/item/acacia_wood.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco acacia scortecciato",     image:"https://minecraftitemids.com/item/stripped_acacia_log.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Legno acacia scortecciato",      image:"https://minecraftitemids.com/item/stripped_acacia_wood.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi di acacia",                 image:"https://minecraftitemids.com/item/acacia_planks.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini di acacia",              image:"https://minecraftitemids.com/item/acacia_stairs.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra di acacia",               image:"https://minecraftitemids.com/item/acacia_slab.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di acacia",          image:"https://minecraftitemids.com/item/acacia_fence.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di acacia",          image:"https://minecraftitemids.com/item/acacia_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta di acacia",                image:"https://minecraftitemids.com/item/acacia_door.png",     category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di acacia",               image:"https://minecraftitemids.com/item/acacia_trapdoor.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Pedana pressione acacia",        image:"https://minecraftitemids.com/item/acacia_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante di acacia",             image:"https://minecraftitemids.com/item/acacia_button.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Quercia scura (dark_oak)
+    { name:"Tronco di quercia scura",        image:"https://minecraftitemids.com/item/dark_oak_log.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di quercia scura",         image:"https://minecraftitemids.com/item/dark_oak_wood.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco scuro scortecciato",      image:"https://minecraftitemids.com/item/stripped_dark_oak_log.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Legno scuro scortecciato",       image:"https://minecraftitemids.com/item/stripped_dark_oak_wood.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi di quercia scura",          image:"https://minecraftitemids.com/item/dark_oak_planks.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Scalini di quercia scura",       image:"https://minecraftitemids.com/item/dark_oak_stairs.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Lastra di quercia scura",        image:"https://minecraftitemids.com/item/dark_oak_slab.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di quercia scura",   image:"https://minecraftitemids.com/item/dark_oak_fence.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Cancelletto di quercia scura",   image:"https://minecraftitemids.com/item/dark_oak_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta di quercia scura",         image:"https://minecraftitemids.com/item/dark_oak_door.png", category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Botola di quercia scura",        image:"https://minecraftitemids.com/item/dark_oak_trapdoor.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione quercia scura",image:"https://minecraftitemids.com/item/dark_oak_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante di quercia scura",      image:"https://minecraftitemids.com/item/dark_oak_button.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+
+    // Mangrovia
+    { name:"Tronco di mangrovia",            image:"https://minecraftitemids.com/item/mangrove_log.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di mangrovia",             image:"https://minecraftitemids.com/item/mangrove_wood.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco mangrovia scortecciato",  image:"https://minecraftitemids.com/item/stripped_mangrove_log.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Legno mangrovia scortecciato",   image:"https://minecraftitemids.com/item/stripped_mangrove_wood.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi di mangrovia",              image:"https://minecraftitemids.com/item/mangrove_planks.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Scalini di mangrovia",           image:"https://minecraftitemids.com/item/mangrove_stairs.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Lasra di mangrovia",             image:"https://minecraftitemids.com/item/mangrove_slab.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di mangrovia",       image:"https://minecraftitemids.com/item/mangrove_fence.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Cancelletto di mangrovia",       image:"https://minecraftitemids.com/item/mangrove_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta di mangrovia",             image:"https://minecraftitemids.com/item/mangrove_door.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Botola di mangrovia",            image:"https://minecraftitemids.com/item/mangrove_trapdoor.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione mangrovia",     image:"https://minecraftitemids.com/item/mangrove_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante di mangrovia",          image:"https://minecraftitemids.com/item/mangrove_button.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+
+    // Ciliegio (cherry)
+    { name:"Tronco di ciliegio",             image:"https://minecraftitemids.com/item/cherry_log.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di ciliegio",              image:"https://minecraftitemids.com/item/cherry_wood.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco ciliegio scortecciato",   image:"https://minecraftitemids.com/item/stripped_cherry_log.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Legno ciliegio scortecciato",    image:"https://minecraftitemids.com/item/stripped_cherry_wood.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi di ciliegio",               image:"https://minecraftitemids.com/item/cherry_planks.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini di ciliegio",            image:"https://minecraftitemids.com/item/cherry_stairs.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra di ciliegio",             image:"https://minecraftitemids.com/item/cherry_slab.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di ciliegio",        image:"https://minecraftitemids.com/item/cherry_fence.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di ciliegio",        image:"https://minecraftitemids.com/item/cherry_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta di ciliegio",              image:"https://minecraftitemids.com/item/cherry_door.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di ciliegio",             image:"https://minecraftitemids.com/item/cherry_trapdoor.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione ciliegio",      image:"https://minecraftitemids.com/item/cherry_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante di ciliegio",           image:"https://minecraftitemids.com/item/cherry_button.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+
+    // Quercia pallida (mangrove_sign… non esiste, ma usiamo placeholder)
+    { name:"Tronco di quercia pallida",      image:"https://via.placeholder.com/40?text=QP", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Legno di quercia pallida",       image:"https://via.placeholder.com/40?text=LP", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Tronco pallido scortecciato",    image:"https://via.placeholder.com/40?text=QPS",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Legno pallido scortecciato",     image:"https://via.placeholder.com/40?text=LPS",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi di quercia pallida",        image:"https://via.placeholder.com/40?text=AP", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini pallidi",                image:"https://via.placeholder.com/40?text=SP", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra pallida",                 image:"https://via.placeholder.com/40?text=LPd",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Staccionata pallida",            image:"https://via.placeholder.com/40?text=StP",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Cancelletto pallido",            image:"https://via.placeholder.com/40?text=CPd",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta pallida",                  image:"https://via.placeholder.com/40?text=PPd",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Botola pallida",                 image:"https://via.placeholder.com/40?text=BPd",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione pallida",       image:"https://via.placeholder.com/40?text=PPP",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante pallido",               image:"https://via.placeholder.com/40?text=PuPd",category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+
+    // Bambù (usiamo item id di bambu standard)
+    { name:"Blocco di bambù",                image:"https://minecraftitemids.com/item/bamboo_block.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Blocco di bambù scortecciato",   image:"https://minecraftitemids.com/item/stripped_bamboo_block.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi di bambù",                  image:"https://minecraftitemids.com/item/bamboo_planks.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Bambù intrecciato",              image:"https://minecraftitemids.com/item/bamboo_mosaic.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini di bambù",               image:"https://minecraftitemids.com/item/bamboo_stairs.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra di bambù",                image:"https://minecraftitemids.com/item/bamboo_slab.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata di bambù",           image:"https://minecraftitemids.com/item/bamboo_fence.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto di bambù",           image:"https://minecraftitemids.com/item/bamboo_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta di bambù",                 image:"https://minecraftitemids.com/item/bamboo_door.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola di bambù",                image:"https://minecraftitemids.com/item/bamboo_trapdoor.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione bambù",         image:"https://minecraftitemids.com/item/bamboo_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante di bambù",              image:"https://minecraftitemids.com/item/bamboo_button.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Cremisi (nether crimson)
+    { name:"Gambo cremisi",                  image:"https://minecraftitemids.com/item/crimson_stem.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Ife cremisi",                    image:"https://minecraftitemids.com/item/crimson_hyphae.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Gambo cremisi scortecciato",     image:"https://minecraftitemids.com/item/stripped_crimson_stem.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Ife cremisi scortecciate",       image:"https://minecraftitemids.com/item/stripped_crimson_hyphae.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi cremisi",                   image:"https://minecraftitemids.com/item/crimson_planks.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini cremisi",                image:"https://minecraftitemids.com/item/crimson_stairs.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra cremisi",                 image:"https://minecraftitemids.com/item/crimson_slab.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata cremisi",            image:"https://minecraftitemids.com/item/crimson_fence.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto cremisi",            image:"https://minecraftitemids.com/item/crimson_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta cremisi",                  image:"https://minecraftitemids.com/item/crimson_door.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola cremisi",                 image:"https://minecraftitemids.com/item/crimson_trapdoor.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione cremisi",       image:"https://minecraftitemids.com/item/crimson_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante cremisi",               image:"https://minecraftitemids.com/item/crimson_button.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+
+    // Distorto (warped)
+    { name:"Gambo distorto",                 image:"https://minecraftitemids.com/item/warped_stem.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Ife distorte",                   image:"https://minecraftitemids.com/item/warped_hyphae.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Gambo distorto scortecciato",    image:"https://minecraftitemids.com/item/stripped_warped_stem.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Ife distorto scortecciate",      image:"https://minecraftitemids.com/item/stripped_warped_hyphae.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Assi distorte",                  image:"https://minecraftitemids.com/item/warped_planks.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Scalini distorti",               image:"https://minecraftitemids.com/item/warped_stairs.png",  category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Lastra distorta",                image:"https://minecraftitemids.com/item/warped_slab.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Staccionata distorta",           image:"https://minecraftitemids.com/item/warped_fence.png",   category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Cancelletto distorto",           image:"https://minecraftitemids.com/item/warped_fence_gate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Porta distorta",                 image:"https://minecraftitemids.com/item/warped_door.png",    category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] },
+    { name:"Botola distorta",                image:"https://minecraftitemids.com/item/warped_trapdoor.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pedana pressione distorta",      image:"https://minecraftitemids.com/item/warped_pressure_plate.png",category:"building",recipe:[[null,null,null],[null,null,null],[null,null,null]]},
+    { name:"Pulsante distorto",              image:"https://minecraftitemids.com/item/warped_button.png", category:"building", recipe:[[null,null,null],[null,null,null],[null,null,null]] }
   ];
 
-  // Icone materie prime
   const icons = {
-    "wood_plank": "https://minecraftitemids.com/item/wood_plank.png",
-    "stick": "https://minecraftitemids.com/item/stick.png",
-    "stone": "https://minecraftitemids.com/item/stone.png",
-    "cobblestone": "https://minecraftitemids.com/item/cobblestone.png",
-    "iron_ingot": "https://minecraftitemids.com/item/iron_ingot.png",
-    "flint": "https://minecraftitemids.com/item/flint.png",
-    "wool": "https://minecraftitemids.com/item/wool.png",
+    wood_plank:    "https://minecraftitemids.com/item/wood_plank.png",
+    stick:         "https://minecraftitemids.com/item/stick.png",
+    stone:         "https://minecraftitemids.com/item/stone.png",
+    cobblestone:   "https://minecraftitemids.com/item/cobblestone.png",
+    iron_ingot:    "https://minecraftitemids.com/item/iron_ingot.png",
+    flint:         "https://minecraftitemids.com/item/flint.png",
+    wool:          "https://minecraftitemids.com/item/wool.png"
   };
 
   const categories = {
-    "building": "Blocchi da costruzione",
-    "colored": "Blocchi colorati",
-    "natural": "Blocchi naturali",
-    "functional": "Blocchi funzionali",
-    "redstone": "Redstone",
-    "tools": "Attrezzi e Utilità",
-    "combat": "Combattimento",
-    "food": "Cibi e Bevande",
-    "ingredients": "Ingredienti"
+    building:   "Blocchi da costruzione",
+    colored:    "Blocchi colorati",
+    natural:    "Blocchi naturali",
+    functional: "Blocchi funzionali",
+    redstone:   "Redstone",
+    tools:      "Attrezzi e Utilità",
+    combat:     "Combattimento",
+    food:       "Cibi e Bevande",
+    ingredients:"Ingredienti"
   };
 
   const categoryButtons = document.querySelectorAll('.category-btn');
-  const itemsList = document.getElementById('itemsList');
-  const itemsTableBody = document.getElementById('itemsTableBody');
+  const itemsListDiv     = document.getElementById('itemsList');
+  const itemsTableBody   = document.getElementById('itemsTableBody');
   const categoryNameSpan = document.getElementById('categoryName');
-  const recipeDiv = document.getElementById('recipe');
-  const recipeNameSpan = document.getElementById('recipeName');
-  const craftingGrid = document.getElementById('craftingGrid');
-  const btnBackCategories = document.getElementById('btnBack');
-  const btnBackToItems = document.getElementById('btnBackToItems');
-  const searchBar = document.getElementById('searchBar');
+  const recipeDiv        = document.getElementById('recipe');
+  const recipeNameSpan   = document.getElementById('recipeName');
+  const craftingGrid     = document.getElementById('craftingGrid');
+  const btnBackCategories= document.getElementById('btnBack');
+  const btnBackToItems   = document.getElementById('btnBackToItems');
+  const searchBar        = document.getElementById('searchBar');
 
   let currentCategory = null;
-  let currentItemsFiltered = [];
-  
+
   function showCategories() {
-    itemsList.style.display = 'none';
-    recipeDiv.style.display = 'none';
     document.getElementById('categories').style.display = 'flex';
+    itemsListDiv.style.display = 'none';
+    recipeDiv.style.display   = 'none';
   }
 
-  function showItems(category) {
-    currentCategory = category;
-    categoryNameSpan.textContent = categories[category];
-    document.getElementById('categories').style.display = 'none';
-    recipeDiv.style.display = 'none';
-    itemsList.style.display = 'block';
-    searchBar.value = '';
-    renderItemsList(category, '');
-  }
-
-  function renderItemsList(category, filter) {
-    let filteredItems = items.filter(i => i.category === category);
-    if(filter) {
-      const f = filter.toLowerCase();
-      filteredItems = filteredItems.filter(i => i.name.toLowerCase().includes(f));
-    }
-    currentItemsFiltered = filteredItems;
+  function renderItemsList(categoryKey, filter = '') {
+    currentCategory = categoryKey;
+    categoryNameSpan.textContent = categories[categoryKey];
     itemsTableBody.innerHTML = '';
-    filteredItems.forEach(item => {
-      const tr = document.createElement('tr');
-      tr.tabIndex = 0; // per accessibilità
-      tr.innerHTML = `<td><img class="item-img" src="${item.image}" alt="${item.name}"></td><td>${item.name}</td>`;
-      tr.addEventListener('click', () => {
-        showRecipe(item);
+    items
+      .filter(i => i.category === categoryKey && i.name.toLowerCase().includes(filter))
+      .forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><img class="item-img" src="${item.image}" alt="${item.name}"></td>
+          <td>${item.name}</td>`;
+        tr.onclick = () => showRecipe(item);
+        itemsTableBody.appendChild(tr);
       });
-      itemsTableBody.appendChild(tr);
-    });
-    if(filteredItems.length === 0) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan="2" style="text-align:center; font-style:italic;">Nessun oggetto trovato</td>`;
-      itemsTableBody.appendChild(tr);
-    }
+    document.getElementById('categories').style.display = 'none';
+    itemsListDiv.style.display = 'block';
+    recipeDiv.style.display   = 'none';
   }
 
   function showRecipe(item) {
-    document.getElementById('categories').style.display = 'none';
-    itemsList.style.display = 'none';
-    recipeDiv.style.display = 'block';
     recipeNameSpan.textContent = item.name;
-
     craftingGrid.innerHTML = '';
-    // La ricetta è una matrice 3x3, può contenere null o stringhe (nomi ingredienti)
-    for(let r=0; r<3; r++) {
-      for(let c=0; c<3; c++) {
-        const cell = document.createElement('div');
-        cell.classList.add('crafting-cell');
-        const ingredientKey = item.recipe && item.recipe[r] ? item.recipe[r][c] : null;
-        if(ingredientKey) {
-          const imgSrc = icons[ingredientKey] || 'https://minecraftitemids.com/item/unknown.png';
-          const img = document.createElement('img');
-          img.src = imgSrc;
-          img.alt = ingredientKey;
-          cell.appendChild(img);
-
-          // Tooltip col nome ingrediente
-          const tooltip = document.createElement('div');
-          tooltip.classList.add('tooltip');
-          // Capitalizza prima lettera e sostituisce underscore con spazio
-          tooltip.textContent = ingredientKey.charAt(0).toUpperCase() + ingredientKey.slice(1).replace(/_/g, ' ');
-          cell.appendChild(tooltip);
+    item.recipe.forEach(row => {
+      row.forEach(cell => {
+        const cellDiv = document.createElement('div');
+        cellDiv.className = 'crafting-cell';
+        if (cell) {
+          const imgSrc = icons[cell] || 'https://via.placeholder.com/40?text=?';
+          cellDiv.innerHTML = `
+            <img src="${imgSrc}" alt="${cell}">
+            <div class="tooltip">${cell.replace(/_/g,' ')}</div>`;
         }
-        craftingGrid.appendChild(cell);
-      }
-    }
+        craftingGrid.appendChild(cellDiv);
+      });
+    });
+    itemsListDiv.style.display = 'none';
+    recipeDiv.style.display   = 'block';
   }
 
-  // Event listeners bottoni categoria
   categoryButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      showItems(btn.dataset.category);
+      renderItemsList(btn.dataset.category);
     });
   });
 
-  // Bottone torna alle categorie
-  btnBackCategories.addEventListener('click', () => {
-    showCategories();
+  btnBackCategories.onclick = showCategories;
+  btnBackToItems.onclick    = () => renderItemsList(currentCategory);
+
+  searchBar.addEventListener('input', e => {
+    renderItemsList(currentCategory, e.target.value.toLowerCase());
   });
 
-  // Bottone torna alla lista oggetti da ricetta
-  btnBackToItems.addEventListener('click', () => {
-    if(currentCategory) {
-      showItems(currentCategory);
-    }
-  });
-
-  // Ricerca filtraggio oggetti
-  searchBar.addEventListener('input', () => {
-    renderItemsList(currentCategory, searchBar.value);
-  });
-
-  // Inizio mostrando categorie
+  // inizializza con le categorie
   showCategories();
-
 </script>
 
 </body>
